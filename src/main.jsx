@@ -1,14 +1,19 @@
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import About from './pages/About'
-import './index.css'
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import About from './pages/About';
+import Resume from './pages/Resume';
+import Layout from './components/Layout';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <Router>
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-        </Routes>
-    </Router>
-)
+  <Router>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="resume.pdf" element={<Resume />} />
+      </Route>
+    </Routes>
+  </Router>
+);

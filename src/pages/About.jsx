@@ -3,9 +3,6 @@ const About = ({ }) => {
   return (
     <div>
       <h1>About page</h1>
-      {/* <Notification message={errorMessage} isError={true}/>
-      <Notification message={successMessage} isError={false} /> */}
-      {/* <Name nameClick={()=>{handleNameClick}}/> */}
     </div>
   )
 }
