@@ -27,8 +27,10 @@ const Sidebar = () => {
     const body = document.body;
     if (isOpen) {
       body.classList.add('sidebar-open');
+      body.classList.remove('sidebar-mobile');
     } else {
       body.classList.remove('sidebar-open');
+      body.classList.add('sidebar-mobile');
     }
   }, [isOpen]);
 

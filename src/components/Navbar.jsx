@@ -7,10 +7,22 @@ import {
   HomeIcon,
   PencilIcon,
   StarIcon} from '@heroicons/react/24/solid';
+import { useEffect } from 'react';
 
 const Navbar = () => {
-  document.body.classList.remove('sidebar-open');
-  document.body.classList.add('sidebar-mobile');
+  useEffect(() => {
+    const isMobile = () => {
+      const userAgent = navigator.userAgent;
+      const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+      return regex.test(userAgent); 
+    }
+  
+    if (isMobile()) {
+      document.body.classList.add('sidebar-mobile');
+    } else {
+      document.body.classList.remove('sidebar-mobile');
+    }
+  }, []);
 
   const navbarItem = (icon, link) => {
     return (

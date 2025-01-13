@@ -47,7 +47,7 @@ const About = () => {
       <img 
       src={imgSrcs[imgId]} 
       alt="personal picture" 
-      className={`md:shrink-0 mt-20 w-3/4 md:w-1/3 mt-8 md:mt-0 mr-10 transition duration-500 ease-in-out transform ${isTransformed ? 'scale-x-[-1] ' : 'scale-x-[1]'}`}
+      className={`md:shrink-0 mt-20 w-3/4 md:w-1/3 mt-8 md:mt-0 md:mr-10 transition duration-500 ease-in-out transform ${isTransformed ? 'scale-x-[-1] ' : 'scale-x-[1]'}`}
       onClick={handlePicClick}/>
     </>
     )
@@ -69,6 +69,7 @@ const About = () => {
           <div className='flex flex-col items-center justify-center'>
             {aboutText()}
             {picture()}
+            
           </div>  
         ) : ( 
           <>
