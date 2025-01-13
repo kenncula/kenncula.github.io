@@ -14,19 +14,13 @@ const Sidebar = () => {
   const handleMouseEnter = () => {
     timer = setTimeout(() => {
       setIsOpen(true);
+      clearTimeout(timer)
     }, 200); // slight delay
   };
 
   const handleMouseLeave = () => {
     clearTimeout(timer);
     setIsOpen(false);
-  };
-
-  const handleClick = () => {
-    setIsOpen(false);
-    timer = setTimeout(() => {
-      setIsOpen(true);
-    }, 2000)
   };
 
   useEffect(() => {
@@ -53,7 +47,6 @@ const Sidebar = () => {
       style={{ backgroundColor: '#434343' }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
     >
       <nav className="mt-4">
         <a href="/#Home" className="flex items-left py-2 px-4">
