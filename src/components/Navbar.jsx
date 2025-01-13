@@ -27,7 +27,7 @@ const Navbar = () => {
   const navbarItem = (icon, link) => {
     return (
       <>
-        <a href={link} className="flex items-center py-2 px-1">
+        <a href={link} className="flex items-center py-2 px-1" rel="noopener noreferrer">
         {icon}
         </a>
       </>
@@ -51,13 +51,15 @@ const Navbar = () => {
         {navbarItem(<StarIcon  className="h-6 w-6 ml-auto"/>, "/#Projects")}
         {navbarItem(<AcademicCapIcon className="h-6 w-6 ml-auto"/>, "/#Education")}
         {navbarItem(<PencilIcon className="h-6 w-6 ml-auto"/>, "/#Blog" )}
-        {navbarItem(<DocumentTextIcon  className="h-6 w-6 ml-auto"/>, "resume.pdf" )}
-        {navbarItem( 
-          <img src="\github-logo.png" alt="logo" className="h-6 w-6 ml-auto github-logo" />, 
-          "https://github.com/kenncula" )}
-        {navbarItem(
-          <img src="\linkedin.png" alt="logo" className="h-6 w-6 ml-auto linkedin-logo" />, 
-          "https://linkedin.com/in/kenneth-cula")}
+        <a href={'resume.pdf'} className="flex items-center py-2 px-1" target="_blank" rel="noopener noreferrer">
+          <DocumentTextIcon  className="h-6 w-6 ml-auto"/>
+        </a>
+        <a href={"https://github.com/kenncula"} className="flex items-center py-2 px-1" target="_blank" rel="noopener noreferrer">
+          <img src="\github-logo.png" alt="logo" className="h-6 w-6 ml-auto github-logo" />
+        </a>
+        <a href={"https://linkedin.com/in/kenneth-cula"} className="flex items-center py-2 px-1" target="_blank" rel="noopener noreferrer">
+          <img src="\linkedin.png" alt="logo" className="h-6 w-6 ml-auto linkedin-logo" />
+        </a>
         </nav>
       </nav>
     </div>

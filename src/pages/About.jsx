@@ -34,7 +34,11 @@ const About = () => {
             of many networked and distributed systems for educational and research purposes.</p>
           <p className="mt-3 "> 
             Masters of Engineering in Computer Science Alum from Cornell University.
-            Feel free to reach out: kenncula@gmail.com</p>
+            Feel free to reach out: 
+            <a href="mailto:kenncula@gmail.com" target="_blank" rel="noopener noreferrer">
+              kenncula@gmail.com
+            </a>
+          </p>
         </div>
       </div>
     </>
