@@ -34,10 +34,12 @@ const Sidebar = () => {
 
   const sideBarItem = (content, icon, link) => {
     return (
+      <>
         <a href={link} className="sidebar-item">
           {content}
           {icon}
         </a>
+      </>
     )
   }
 
@@ -58,7 +60,7 @@ const Sidebar = () => {
        {sideBarItem("About", <UserIcon  className="h-10 w-10 ml-auto"/>, "/#About")}
        {sideBarItem("Projects", <StarIcon  className="h-10 w-10 ml-auto"/>, "/#Projects")}
        {sideBarItem("Education", <AcademicCapIcon className="h-10 w-10 ml-auto"/>, "/#Education")}
-       {sideBarItem("Blog", <PencilIcon className="h-10 w-10 ml-auto"/>, "/#Blog")}
+       {sideBarItem("Blog", <PencilIcon className="h-10 w-10 ml-auto"/>, "/#Blog" )}
        {sideBarItem("Resume", <DocumentTextIcon  className="h-10 w-10 ml-auto"/>, "resume.pdf")}
        {sideBarItem("Github", 
         <img src="\github-logo.png" alt="logo" className="h-9 w-9 ml-auto github-logo" />, 
