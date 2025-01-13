@@ -1,4 +1,5 @@
 import About from "./About";
+import Blog from "./Blog";
 import Education from "./Education";
 import Intro from "./Intro";
 import Projects from "./Projects";
@@ -10,6 +11,7 @@ const Home = () => {
     <About/>
     <Projects/>
     <Education/>
+    <Blog/>
     </>
   );
 };

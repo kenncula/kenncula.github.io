@@ -4,7 +4,9 @@ import {
   UserIcon, 
   DocumentTextIcon, 
   AcademicCapIcon,  
-  HomeIcon} from '@heroicons/react/24/solid';
+  HomeIcon,
+  PencilIcon,
+  StarIcon} from '@heroicons/react/24/solid';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,12 +17,20 @@ const Sidebar = () => {
       section.scrollIntoView({ behavior: 'smooth' });
     }
   }
-  const sideBarItem = (itemId, Icon) => {
+  const sideBarItem = (itemId, Icon, to) => {
     return (
-        <Link to={'/#' + itemId} className="sidebar-item" onClick={ () => scrollToSection(itemId)}>
+        <Link to={to} className="sidebar-item" onClick={ () => scrollToSection(itemId)}>
           {itemId}
           <Icon className="h-10 w-10 ml-auto"/>
         </Link>
+    )
+  }
+  const sideBarLink = (content, Img, link) => {
+    return (
+        <a href={link} className="sidebar-item">
+          {content}
+          {Img}
+        </a>
     )
   }
 
@@ -37,20 +47,19 @@ const Sidebar = () => {
             <img src="\logos\png\logo-no-background.png" alt="logo" className="w-24 h-20 ml-auto" />
           </div>
        </Link>
-       {sideBarItem("Home", HomeIcon)}
-       {sideBarItem("About", UserIcon)}
-       {sideBarItem("Projects", DocumentTextIcon)}
-       {sideBarItem("Education", AcademicCapIcon)}
-        <a href="https://github.com/kenncula" className="sidebar-item">
-          Github
-          <img src="\github-logo.png" alt="logo" className="h-9 w-9 ml-auto github-logo" />
-        </a>
-        <a href="https://linkedin.com/in/kenneth-cula" className="sidebar-item">
-          LinkedIn
-          <img src="\linkedin.png" alt="logo" className="h-9 w-9 ml-auto linkedin-logo" />
-        </a>
+       {sideBarItem("Home", HomeIcon, "/#Home")}
+       {sideBarItem("About", UserIcon, "/#About")}
+       {sideBarItem("Projects", StarIcon, "/#Projects")}
+       {sideBarItem("Education", AcademicCapIcon, "/#Education")}
+       {sideBarItem("Blog", PencilIcon, "/#Blog")}
+       {sideBarItem("Resume", DocumentTextIcon, "resume.pdf")}
+       {sideBarLink("Github", 
+        <img src="\github-logo.png" alt="logo" className="h-9 w-9 ml-auto github-logo" />, 
+        "https://github.com/kenncula")}
+       {sideBarLink(
+        "LinkedIn", <img src="\linkedin.png" alt="logo" className="h-9 w-9 ml-auto linkedin-logo" />, 
+        "https://linkedin.com/in/kenneth-cula")}
       </nav>
-      {/* </div> */}
     </div>
   ); 
 };
