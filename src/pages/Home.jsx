@@ -1,8 +1,16 @@
+import About from "./About";
+import Education from "./Education";
+import Intro from "./Intro";
+import Projects from "./Projects";
+
 const Home = () => {
   return (
-    <div>
-      <h1>Welcome to the Home Page</h1>
-    </div>
+    <>
+    <Intro/>
+    <About/>
+    <Projects/>
+    <Education/>
+    </>
   );
 };
 
