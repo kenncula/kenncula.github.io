@@ -4,7 +4,17 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      rotate: {
+        '360': '360deg',
+      },
+      transitionDuration: {
+        '1500': '1500ms',
+      },
+      scale: {
+        '175': '1.75',
+      }
+    },
   },
   plugins: [],
 }
