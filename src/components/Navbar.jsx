@@ -1,4 +1,4 @@
-// import ReactTooltip from 'react-tooltip';
+import { Tooltip } from "react-tooltip";
 
 import { 
   UserIcon, 
@@ -24,12 +24,21 @@ const Navbar = () => {
     }
   }, []);
 
-  const navbarItem = (icon, link) => {
+  const navbarItem = (content, icon, link, external) => {
     return (
       <>
-        <a href={link} className="flex items-center py-2 px-1" rel="noopener noreferrer">
-        {icon}
-        </a>
+        <a 
+          href={link} 
+          className="flex items-center py-2 px-1"
+          rel="noopener noreferrer" 
+          data-tooltip-id="custom-tooltip"
+          target={external ? "_blank" : ""}
+          data-tooltip-content={`${content}`}
+          data-tooltip-place="bottom"
+          >
+          <Tooltip id="custom-tooltip"/>
+          {icon}
+            </a>
       </>
     )
   }
@@ -40,26 +49,22 @@ const Navbar = () => {
       style={{ backgroundColor: '#434343' }}
     >
       <nav className="-mt-14">
-        <a href="/#Home" className="flex items-left px-40">
-          <div className="flex items-left px-3 mx-3">
-            <img src="\logos\png\logo-no-background.png" alt="logo" className="w-24 h-20" />
+        <a href="/#Home" className="flex items-center px-32 justify-center">
+          <div>
+            <img src="\logos\png\logo-no-background.png" alt="logo" className="w-32 h-20" />
           </div>
        </a>
        <nav className="flex justify-around items-center py-2">
-        {navbarItem(<HomeIcon className="h-6 w-6 ml-auto"/>, "/#Home")}
-        {navbarItem(<UserIcon  className="h-6 w-6 ml-auto"/>, "/#About")}
-        {navbarItem(<StarIcon  className="h-6 w-6 ml-auto"/>, "/#Projects")}
-        {navbarItem(<AcademicCapIcon className="h-6 w-6 ml-auto"/>, "/#Education")}
-        {navbarItem(<PencilIcon className="h-6 w-6 ml-auto"/>, "/#Blog" )}
-        <a href={'resume.pdf'} className="flex items-center py-2 px-1" target="_blank" rel="noopener noreferrer">
-          <DocumentTextIcon  className="h-6 w-6 ml-auto"/>
-        </a>
-        <a href={"https://github.com/kenncula"} className="flex items-center py-2 px-1" target="_blank" rel="noopener noreferrer">
-          <img src="\github-logo.png" alt="logo" className="h-6 w-6 ml-auto github-logo" />
-        </a>
-        <a href={"https://linkedin.com/in/kenneth-cula"} className="flex items-center py-2 px-1" target="_blank" rel="noopener noreferrer">
-          <img src="\linkedin.png" alt="logo" className="h-6 w-6 ml-auto linkedin-logo" />
-        </a>
+        {navbarItem("Home", <HomeIcon className="h-6 w-6 ml-auto"/>, "/#Home",false)}
+        {navbarItem("About",<UserIcon  className="h-6 w-6 ml-auto"/>, "/#About",false)}
+        {navbarItem("Projects",<StarIcon  className="h-6 w-6 ml-auto"/>, "/#Projects",false)}
+        {navbarItem("Education",<AcademicCapIcon className="h-6 w-6 ml-auto"/>, "/#Education",false)}
+        {navbarItem("Blog",<PencilIcon className="h-6 w-6 ml-auto"/>, "/#Blog" ,false)}
+        {navbarItem("Resume",<DocumentTextIcon  className="h-6 w-6 ml-auto"/>, "resume.pdf" ,true)}
+        {navbarItem("Github",<img src="\github-logo.png" alt="Github logo" className="h-6 w-6 ml-auto github-logo" />, 
+        "https://github.com/kenncula" ,true)}
+        {navbarItem("LinkedIn",<img src="\linkedin.png" alt="LinkedIn logo" className="h-6 w-6 ml-auto linkedin-logo" />, 
+        "https://linkedin.com/in/kenneth-cula" ,true)}
         </nav>
       </nav>
     </div>
