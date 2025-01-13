@@ -36,12 +36,12 @@ const Navbar = () => {
 
   return (
     <div 
-      className={`fixed top-0 left-0 h-40 w-full shadow-lg text-white z-50` } 
+      className={`fixed top-0 left-0 h-20 w-full shadow-lg text-white z-50` } 
       style={{ backgroundColor: '#434343' }}
     >
-      <nav className="mt-4">
+      <nav className="-mt-14">
         <a href="/#Home" className="flex items-left px-40">
-          <div className="flex items-left px-3">
+          <div className="flex items-left px-3 mx-3">
             <img src="\logos\png\logo-no-background.png" alt="logo" className="w-24 h-20" />
           </div>
        </a>

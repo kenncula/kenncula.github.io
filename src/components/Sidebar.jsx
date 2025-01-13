@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react'
+import { Tooltip } from "react-tooltip";
+// import "react-tooltip/dist/react-tooltip.css";
+
 import { 
   UserIcon, 
   DocumentTextIcon, 
@@ -15,7 +18,7 @@ const Sidebar = () => {
     timer = setTimeout(() => {
       setIsOpen(true);
       clearTimeout(timer)
-    }, 200); // slight delay
+    }, 2500); // slight delay
   };
 
   const handleMouseLeave = () => {
@@ -34,10 +37,19 @@ const Sidebar = () => {
     }
   }, [isOpen]);
 
-  const sideBarItem = (content, icon, link) => {
+  const sideBarItem = (content, icon, link, external) => {
     return (
       <>
-        <a href={link} className="sidebar-item" rel="noopener noreferrer">
+        <a 
+          href={link} 
+          className="sidebar-item" 
+          rel="noopener noreferrer" 
+          data-tooltip-id="custom-tooltip"
+          target={external ? "_blank" : ""}
+          data-tooltip-content={`${content}`}
+          data-tooltip-place="right"
+          >
+          <Tooltip id="custom-tooltip"/>
           {content}
           {icon}
         </a>
@@ -58,24 +70,17 @@ const Sidebar = () => {
             <img src="\logos\png\logo-no-background.png" alt="logo" className="w-24 h-20 ml-auto" />
           </div>
        </a>
-       {sideBarItem("Home", <HomeIcon className="h-10 w-10 ml-auto"/>, "/#Home")}
-       {sideBarItem("About", <UserIcon  className="h-10 w-10 ml-auto"/>, "/#About")}
-       {sideBarItem("Projects", <StarIcon  className="h-10 w-10 ml-auto"/>, "/#Projects")}
-       {sideBarItem("Education", <AcademicCapIcon className="h-10 w-10 ml-auto"/>, "/#Education")}
-       {sideBarItem("Blog", <PencilIcon className="h-10 w-10 ml-auto"/>, "/#Blog" )}
-       
-       <a href={"resume.pdf"} className="sidebar-item" target='_blank' rel='noopener noreferrer' >
-          Resume
-          <DocumentTextIcon  className="h-10 w-10 ml-auto"/>
-        </a>
-       <a href={"https://github.com/kenncula"} className="sidebar-item" target="_blank" rel="noopener noreferrer">
-          Github
-          <img src="\github-logo.png" alt="logo" className="h-9 w-9 ml-auto github-logo" />
-        </a>
-       <a href={"https://linkedin.com/in/kenneth-cula"} className="sidebar-item" target="_blank" rel="noopener noreferrer">
-          LinkedIn
-          <img src="\linkedin.png" alt="logo" className="h-9 w-9 ml-auto linkedin-logo" />
-        </a>
+       {sideBarItem("Home", <HomeIcon className="h-10 w-10 ml-auto"/>, "/#Home", false)}
+       {sideBarItem("About", <UserIcon  className="h-10 w-10 ml-auto"/>, "/#About",false)}
+       {sideBarItem("Projects", <StarIcon  className="h-10 w-10 ml-auto"/>, "/#Projects",false)}
+       {sideBarItem("Education", <AcademicCapIcon className="h-10 w-10 ml-auto"/>, "/#Education",false)}
+       {sideBarItem("Blog", <PencilIcon className="h-10 w-10 ml-auto"/>, "/#Blog",false)}
+
+       {sideBarItem("Resume",  <DocumentTextIcon  className="h-10 w-10 ml-auto"/>, "resume.pdf",true)}
+       {sideBarItem("Github", <img src="\github-logo.png" alt="github" className="h-9 w-9 ml-auto github-logo" />, 
+        "https://github.com/kenncula",true)}
+       {sideBarItem("LinkedIn", <img src="\linkedin.png" alt="linkedin" className="h-9 w-9 ml-auto linkedin-logo" />, 
+        "https://linkedin.com/in/kenneth-cula",true)}
       </nav>
     </div>
   ); 

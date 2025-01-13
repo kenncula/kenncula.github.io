@@ -1,10 +1,15 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import '../index.css';
 
 const Intro = () => {
+  const [isRefreshed, setIsRefreshed] = useState(true);
   const [logoClicked, setLogoClicked] = useState(false);
   const [isScaled, setIsScaled] = useState(false);
   
+  useEffect(() => {
+    setIsRefreshed(false);
+  }, []);
+
   const handleLogoClick = () => {
     setLogoClicked(!logoClicked);
     setIsScaled(true);
@@ -19,7 +24,10 @@ const Intro = () => {
           <img 
             src="logos\png\logo-color.png" 
             alt="logo" 
-            className={`h-48 w-48 rounded ml-auto transition duration-1500 transform ${logoClicked ? 'rotate-360 ease-out' : '-rotate-360 ease-out'} ${isScaled ? 'scale-100' : 'scale-175'}`} 
+            className={`h-48 w-48 rounded ml-auto transition duration-1500 transform 
+              ${logoClicked ? 'rotate-360 ease-out' : '-rotate-360 ease-out'} 
+              ${isScaled ? 'scale-100' : 'scale-175'}
+              ${isRefreshed ? '-rotate-90' : ''}`}
             onClick={handleLogoClick}
             />
         </h1>
