@@ -9,6 +9,25 @@ import {
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  let timer;
+
+  const handleMouseEnter = () => {
+    timer = setTimeout(() => {
+      setIsOpen(true);
+    }, 200); // slight delay
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(timer);
+    setIsOpen(false);
+  };
+
+  const handleClick = () => {
+    setIsOpen(false);
+    timer = setTimeout(() => {
+      setIsOpen(true);
+    }, 2000)
+  };
 
   useEffect(() => {
     const body = document.body;
@@ -32,8 +51,9 @@ const Sidebar = () => {
     <div 
       className={`fixed text-left top-0 left-0 h-full w-48 shadow-lg text-white transition-transform duration-500 ease-in-out transform ${isOpen ? 'translate-x-0 w-48' : '-translate-x-32 w-48'}` } 
       style={{ backgroundColor: '#434343' }}
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
     >
       <nav className="mt-4">
         <a href="/#Home" className="flex items-left py-2 px-4">
