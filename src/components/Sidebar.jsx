@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { 
   UserIcon, 
   DocumentTextIcon, 
@@ -11,52 +10,47 @@ import {
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const scrollToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+  useEffect(() => {
+    const body = document.body;
+    if (isOpen) {
+      body.classList.add('sidebar-open');
+    } else {
+      body.classList.remove('sidebar-open');
     }
-  }
-  const sideBarItem = (itemId, Icon, to) => {
-    return (
-        <Link to={to} className="sidebar-item" onClick={ () => scrollToSection(itemId)}>
-          {itemId}
-          <Icon className="h-10 w-10 ml-auto"/>
-        </Link>
-    )
-  }
-  const sideBarLink = (content, Img, link) => {
+  }, [isOpen]);
+
+  const sideBarItem = (content, icon, link) => {
     return (
         <a href={link} className="sidebar-item">
           {content}
-          {Img}
+          {icon}
         </a>
     )
   }
 
   return (
     <div 
-      className={`fixed text-left top-0 left-0 h-full w-48 shadow-lg text-white transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-x-0 w-48' : '-translate-x-32 w-48'}` } 
+      className={`fixed text-left top-0 left-0 h-full w-48 shadow-lg text-white transition-transform duration-500 ease-in-out transform ${isOpen ? 'translate-x-0 w-48' : '-translate-x-32 w-48'}` } 
       style={{ backgroundColor: '#434343' }}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
       <nav className="mt-4">
-        <Link to="/#Home" className="flex items-left py-2 px-4 " onClick={ () => scrollToSection('Home')}>
+        <a href="/#Home" className="flex items-left py-2 px-4">
           <div className="flex items-left py-8 px-3">
             <img src="\logos\png\logo-no-background.png" alt="logo" className="w-24 h-20 ml-auto" />
           </div>
-       </Link>
-       {sideBarItem("Home", HomeIcon, "/#Home")}
-       {sideBarItem("About", UserIcon, "/#About")}
-       {sideBarItem("Projects", StarIcon, "/#Projects")}
-       {sideBarItem("Education", AcademicCapIcon, "/#Education")}
-       {sideBarItem("Blog", PencilIcon, "/#Blog")}
-       {sideBarItem("Resume", DocumentTextIcon, "resume.pdf")}
-       {sideBarLink("Github", 
+       </a>
+       {sideBarItem("Home", <HomeIcon className="h-10 w-10 ml-auto"/>, "/#Home")}
+       {sideBarItem("About", <UserIcon  className="h-10 w-10 ml-auto"/>, "/#About")}
+       {sideBarItem("Projects", <StarIcon  className="h-10 w-10 ml-auto"/>, "/#Projects")}
+       {sideBarItem("Education", <AcademicCapIcon className="h-10 w-10 ml-auto"/>, "/#Education")}
+       {sideBarItem("Blog", <PencilIcon className="h-10 w-10 ml-auto"/>, "/#Blog")}
+       {sideBarItem("Resume", <DocumentTextIcon  className="h-10 w-10 ml-auto"/>, "resume.pdf")}
+       {sideBarItem("Github", 
         <img src="\github-logo.png" alt="logo" className="h-9 w-9 ml-auto github-logo" />, 
         "https://github.com/kenncula")}
-       {sideBarLink(
+       {sideBarItem(
         "LinkedIn", <img src="\linkedin.png" alt="logo" className="h-9 w-9 ml-auto linkedin-logo" />, 
         "https://linkedin.com/in/kenneth-cula")}
       </nav>

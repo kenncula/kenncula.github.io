@@ -43,3 +43,12 @@ html {
 .sidebar-item:hover .linkedin-logo {
   filter: brightness(0) invert(0); /* Black color */
 }
+body {
+  margin-left: 4rem; /* Adjust this value to match the sidebar width */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+body.sidebar-open {
+  margin-left: 12rem; /* Adjust this value to match the sidebar width */
+  transition: margin-left 0.5s ease-in-out;
+}
