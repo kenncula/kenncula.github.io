@@ -8,6 +8,7 @@ import {
   HomeIcon,
   PencilIcon,
   StarIcon} from '@heroicons/react/24/solid';
+import MusicPlayer from './music';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +18,7 @@ const Sidebar = () => {
     timer = setTimeout(() => {
       setIsOpen(true);
       clearTimeout(timer)
-    }, 2500); // slight delay
+    }, 0); // slight delay
   };
 
   const handleMouseLeave = () => {
@@ -63,10 +64,10 @@ const Sidebar = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <nav className="mt-4">
+      <nav>
         <a href="/#Home" className="flex items-left py-2 px-4">
           <div className="flex items-left py-8 px-3">
-            <img src="\logos\png\logo-no-background.png" alt="logo" className="w-24 h-20 ml-auto" />
+            <img src="\logos\png\logo-no-background.png" alt="logo" className="w-20 h-18 ml-auto" />
           </div>
        </a>
        {sideBarItem("Home", <HomeIcon className="h-10 w-10 ml-auto"/>, "/#Home", false)}
@@ -81,6 +82,9 @@ const Sidebar = () => {
        {sideBarItem("LinkedIn", <img src="\linkedin.png" alt="linkedin" className="h-9 w-9 ml-auto linkedin-logo" />, 
         "https://linkedin.com/in/kenneth-cula",true)}
       </nav>
+      <div className='fixed right-0'>
+        <MusicPlayer />
+      </div>
     </div>
   ); 
 };

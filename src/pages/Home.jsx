@@ -1,3 +1,4 @@
+// import MusicPlayer from "../components/Music";
 import About from "./About";
 import Blog from "./Blog";
 import Education from "./Education";
