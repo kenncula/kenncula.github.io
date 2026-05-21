@@ -5,6 +5,7 @@ import Resume from './pages/Resume';
 import Layout from './components/Layout';
 import { ThemeProvider } from './context/ThemeContext';
 import './index.css';
+import './cursorClickSpark';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ThemeProvider>

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 const INTRO_KEY = 'kenncula-intro-done';
-const NAV_LINK_COUNT = 5;
+const NAV_LINK_COUNT = 7;
 const NAV_STAGGER_MS = 100;
 
 /** Center logo fade / brighten / dim */
@@ -73,7 +73,7 @@ function getInitialNavState(phase) {
 const IntroAnimationContext = createContext(null);
 
 export function IntroAnimationProvider({ children }) {
-  const initialPhase = getInitialPhase();
+  const [initialPhase] = useState(getInitialPhase);
   const [phase, setPhase] = useState(initialPhase);
   const [showOverlay, setShowOverlay] = useState(initialPhase !== 'settled');
   const [navLinkState, setNavLinkState] = useState(() =>
@@ -82,13 +82,13 @@ export function IntroAnimationProvider({ children }) {
   const timersStarted = useRef(false);
 
   useEffect(() => {
-    if (phase === 'settled') {
+    if (initialPhase === 'settled') {
       if (!hasSeenIntro()) markIntroSeen();
       setNavLinkState('settled');
       return;
     }
 
-    if (phase !== 'intro' || timersStarted.current) return;
+    if (timersStarted.current) return;
     timersStarted.current = true;
 
     const travelTimer = setTimeout(() => {
@@ -117,7 +117,7 @@ export function IntroAnimationProvider({ children }) {
       clearTimeout(settledTimer);
       timersStarted.current = false;
     };
-  }, [phase]);
+  }, [initialPhase]);
 
   const value = useMemo(
     () => ({

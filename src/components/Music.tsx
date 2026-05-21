@@ -1,13 +1,19 @@
 // MusicPlayer — HTML5 audio: play/pause, prev/next rotate through MP3s in /public/audio/
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import {
+  BackwardIcon,
+  ForwardIcon,
+  PauseIcon,
+  PlayIcon,
+  SpeakerWaveIcon,
+} from "@heroicons/react/24/solid";
 import { useTheme } from "../context/ThemeContext";
 
 /** Add or replace files in public/audio/ (served as /audio/… on the site). */
 const TRACKS = [
-  { title: "Track 1", src: "/audio/track-1.mp3" },
-  { title: "Track 2", src: "/audio/track-2.mp3" },
-  { title: "Track 3", src: "/audio/track-3.mp3" },
+  { title: " ", src: "/audio/track-1.mp3" },
+  { title: " ", src: "/audio/track-2.mp3" },
 ] as const;
 
 const MusicPlayer = () => {
@@ -19,8 +25,6 @@ const MusicPlayer = () => {
   const [duration, setDuration] = useState(0);
   const [loadError, setLoadError] = useState<string | null>(null);
   const skipInitialSourceSync = useRef(true);
-
-  const current = TRACKS[trackIndex];
 
   useEffect(() => {
     const a = new Audio();
@@ -125,24 +129,17 @@ const MusicPlayer = () => {
 
   const progressPct = duration > 0 ? (currentTime / duration) * 100 : 0;
 
-  const panel = dark
-    ? { backgroundColor: "#292524", color: "#fafaf9" }
-    : { backgroundColor: "#d6d3d1", color: "#0c0a09" };
+  const panelClass = dark
+    ? "border-brand-gold/20 bg-black/10 text-stone-50"
+    : "border-brand-gold/25 bg-white/25 text-stone-950";
+  const buttonClass =
+    "grid h-7 w-7 place-items-center rounded-full text-brand-gold/80 transition-colors hover:bg-brand-gold/10 hover:text-brand-gold-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold";
+  const progressTrackClass = dark ? "bg-stone-700/45" : "bg-stone-300/60";
 
   return (
-    <div style={{ width: "200px", margin: "0 auto", textAlign: "center" }}>
-      <p
-        className="truncate text-xs mb-1 px-1"
-        style={{ color: panel.color, opacity: 0.9 }}
-        title={current.title}
-      >
-        {current.title}
-      </p>
+    <div className="w-44 sm:w-52">
       {loadError && (
-        <p
-          className="text-xs mb-1"
-          style={{ color: dark ? "#fca5a5" : "#b91c1c" }}
-        >
+        <p className={`mb-1 text-center text-[10px] ${dark ? "text-red-300" : "text-red-700"}`}>
           {loadError}
         </p>
       )}
@@ -151,99 +148,54 @@ const MusicPlayer = () => {
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        style={{
-          ...panel,
-          padding: "20px",
-          borderRadius: "15px",
-        }}
+        className={`rounded-full border px-2 py-1.5 text-center backdrop-blur-[2px] ${panelClass}`}
       >
-        <motion.button
-          type="button"
-          whileTap={{ scale: 0.95 }}
-          onClick={backSong}
-          whileHover={{ color: "black", backgroundColor: "#e8dfa5" }}
-          aria-label="Previous track"
-          style={{
-            backgroundColor: "transparent",
-            border: "none",
-            borderRadius: "100%",
-            color: panel.color,
-            width: "30px",
-            height: "30px",
-            fontSize: "16px",
-            cursor: "pointer",
-            marginRight: "20px",
-          }}
-        >
-          {"\u23EE"}
-        </motion.button>
+        <div className="flex items-center justify-center gap-1.5">
+          <SpeakerWaveIcon className="hidden h-4 w-4 shrink-0 text-brand-gold/75 sm:block" aria-hidden />
+          <motion.button
+            type="button"
+            whileTap={{ scale: 0.95 }}
+            onClick={backSong}
+            aria-label="Previous track"
+            className={buttonClass}
+          >
+            <BackwardIcon className="h-3.5 w-3.5" aria-hidden />
+          </motion.button>
 
-        <motion.button
-          type="button"
-          whileTap={{ scale: 0.95 }}
-          onClick={togglePlay}
-          whileHover={{ color: "black", backgroundColor: "#e8dfa5" }}
-          aria-label={isPlaying ? "Pause" : "Play"}
-          style={{
-            backgroundColor: "transparent",
-            border: "none",
-            borderRadius: "50%",
-            color: panel.color,
-            width: "30px",
-            height: "30px",
-            fontSize: "16px",
-            cursor: "pointer",
-            marginRight: "10px",
-          }}
-        >
-          {isPlaying ? "\u23F8" : "\u25B6"}
-        </motion.button>
+          <motion.button
+            type="button"
+            whileTap={{ scale: 0.95 }}
+            onClick={togglePlay}
+            aria-label={isPlaying ? "Pause" : "Play"}
+            className={`${buttonClass} h-8 w-8 bg-brand-gold/90 text-stone-950 hover:bg-brand-gold-light hover:text-stone-950`}
+          >
+            {isPlaying ? (
+              <PauseIcon className="h-4 w-4" aria-hidden />
+            ) : (
+              <PlayIcon className="h-4 w-4 translate-x-px" aria-hidden />
+            )}
+          </motion.button>
 
-        <motion.button
-          type="button"
-          whileTap={{ scale: 0.95 }}
-          onClick={nextSong}
-          whileHover={{ color: "black", backgroundColor: "#e8dfa5" }}
-          aria-label="Next track"
-          style={{
-            backgroundColor: "transparent",
-            border: "none",
-            borderRadius: "50%",
-            color: panel.color,
-            width: "30px",
-            height: "30px",
-            fontSize: "16px",
-            cursor: "pointer",
-            marginLeft: "10px",
-          }}
-        >
-          {"\u23ED"}
-        </motion.button>
+          <motion.button
+            type="button"
+            whileTap={{ scale: 0.95 }}
+            onClick={nextSong}
+            aria-label="Next track"
+            className={buttonClass}
+          >
+            <ForwardIcon className="h-3.5 w-3.5" aria-hidden />
+          </motion.button>
+          <p className="hidden shrink-0 text-[10px] tabular-nums text-stone-400 lg:block">
+            {formatTime(currentTime)} / {formatTime(duration || 0)}
+          </p>
+        </div>
 
-        <div
-          className="progress-bar"
-          style={{
-            marginTop: "12px",
-            marginRight: "4px",
-            marginLeft: "4px",
-            height: "8px",
-            backgroundColor: dark ? "#57534e" : "#a8a29e",
-            borderRadius: "3px",
-            overflow: "hidden",
-          }}
-        >
+        <div className={`mt-1 h-0.5 overflow-hidden rounded-full ${progressTrackClass}`}>
           <div
-            style={{
-              width: `${Math.min(100, progressPct)}%`,
-              height: "8px",
-              backgroundColor: dark ? "#fafaf9" : "#0c0a09",
-              transition: "width 0.1s linear",
-            }}
+            className="h-full rounded-full bg-brand-gold transition-[width] duration-100"
+            style={{ width: `${Math.min(100, progressPct)}%` }}
           />
         </div>
-        <p className="text-[10px] mt-1 opacity-80" style={{ color: panel.color }}>
-          {formatTime(currentTime)} / {formatTime(duration || 0)}
-        </p>
       </motion.div>
     </div>
   );

@@ -21,8 +21,8 @@ const cornerPosition = {
   top: '1.5rem',
   left: '1.5rem',
   x: 0,
-  y: 0,
-  fontSize: '1.35rem',
+  y: -10,
+  fontSize: '2rem',
 };
 
 const SiteBrand = () => {

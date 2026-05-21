@@ -74,23 +74,84 @@ html {
 }
 
 .cursor-glow-outer {
-  width: 220px;
-  height: 220px;
+  width: 100px;
+  height: 100px;
   background: radial-gradient(
     circle,
-    rgba(201, 162, 39, 0.2) 0%,
-    rgba(201, 162, 39, 0.08) 40%,
-    transparent 68%
+    rgba(201, 162, 39, 0.11) 0%,
+    rgba(201, 162, 39, 0.04) 42%,
+    transparent 70%
   );
 }
 
 .cursor-glow-inner {
-  width: 72px;
-  height: 72px;
+  width: 50px;
+  height: 50px;
   background: radial-gradient(
     circle,
-    rgba(255, 236, 180, 0.45) 0%,
-    rgba(212, 175, 55, 0.2) 45%,
+    rgba(255, 236, 180, 0.22) 0%,
+    rgba(212, 175, 55, 0.1) 45%,
     transparent 72%
   );
 }
+
+/* .cursor-click-spark {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 250, 230, 1) 0%,
+    rgba(255, 226, 140, 0.95) 22%,
+    rgba(201, 162, 39, 0.5) 48%,
+    transparent 72%
+  );
+  box-shadow:
+    0 0 16px rgba(255, 245, 210, 0.95),
+    0 0 34px rgba(201, 162, 39, 0.75);
+  animation: cursor-spark-burst 1s ease-out forwards;
+}
+
+.cursor-click-spark::before,
+.cursor-click-spark::after {
+  content: '';
+  position: absolute;
+  inset: -9px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 44%,
+      rgba(255, 236, 170, 0.95) 48%,
+      rgba(255, 236, 170, 0.95) 52%,
+      transparent 56%
+    ),
+    linear-gradient(
+      0deg,
+      transparent 44%,
+      rgba(255, 236, 170, 0.95) 48%,
+      rgba(255, 236, 170, 0.95) 52%,
+      transparent 56%
+    );
+}
+
+.cursor-click-spark::after {
+  transform: rotate(45deg);
+  opacity: 0.75;
+}
+
+@keyframes cursor-spark-burst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
+  }
+  45% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) scale(1.55) rotate(18deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.2) rotate(35deg);
+  }
+} */

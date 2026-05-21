@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom';
 import SiteBrand from './SiteBrand';
 import TopNav from './TopNav';
 import CursorGlow from './CursorGlow';
-import MusicPlayer from './Music';
 import { IntroAnimationProvider } from '../context/IntroAnimationContext';
 import { useTheme } from '../context/ThemeContext';
 
@@ -25,9 +24,6 @@ const Layout = () => {
         >
           <Outlet />
         </main>
-        <div className="fixed bottom-4 right-4 z-30">
-          <MusicPlayer />
-        </div>
       </div>
     </IntroAnimationProvider>
   );
