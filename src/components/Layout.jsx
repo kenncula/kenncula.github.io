@@ -1,24 +1,35 @@
 import { Outlet } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import Navbar from './Navbar';
+import SiteBrand from './SiteBrand';
+import TopNav from './TopNav';
+import CursorGlow from './CursorGlow';
+import MusicPlayer from './Music';
+import { IntroAnimationProvider } from '../context/IntroAnimationContext';
+import { useTheme } from '../context/ThemeContext';
 
 const Layout = () => {
+  const { dark } = useTheme();
+  const mainBg = dark
+    ? 'bg-matte-pattern text-stone-50'
+    : 'bg-stone-50 text-stone-950';
+
   return (
-    <div className="bg-hero-pattern min-h-screen flex flex-col md:flex-row">
-      {/* Sidebar for larger screens */}
-      <div className="hidden md:flex">
-        <Sidebar />
+    <IntroAnimationProvider>
+      <div
+        className={`min-h-screen transition-colors duration-200 ${mainBg}`}
+      >
+        <CursorGlow />
+        <SiteBrand />
+        <TopNav />
+        <main
+          className={`relative min-h-screen pt-14 transition-colors duration-200 md:pt-16 ${mainBg}`}
+        >
+          <Outlet />
+        </main>
+        <div className="fixed bottom-4 right-4 z-30">
+          <MusicPlayer />
+        </div>
       </div>
-      
-      {/* Navbar for smaller screens */}
-      <div className="md:hidden">
-        <Navbar />
-      </div>
-      
-      <div className="flex-grow">
-        <Outlet />
-      </div>
-    </div>
+    </IntroAnimationProvider>
   );
 };
 

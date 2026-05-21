@@ -1,7 +1,8 @@
 import { useState } from 'react';
-
+import { useTheme } from '../context/ThemeContext';
 
 const About = () => {
+  const { dark } = useTheme();
   const [imgId, setImgId] = useState(0);
   const [isTransformed, setIsTransformed] = useState(false);
 
@@ -12,30 +13,37 @@ const About = () => {
   }
 
   const imgSrcs = [
-    `ken-pics/headshot0.jpg`,
-    `ken-pics/headshot1.jpg`,
-    `ken-pics/headshot2.jpg`,
-    `ken-pics/headshot3.jpg`
+    `ken-pics/pic1.jpg`,
+    `ken-pics/pic2.jpg`,
+    `ken-pics/pic3.jpg`,
+    `ken-pics/pic4.jpg`,
+    `ken-pics/pic5.jpg`
   ]
+
+  const heading = dark ? 'text-stone-50' : 'text-stone-950';
+  const body = dark ? 'text-stone-200' : 'text-stone-800';
+  const link = dark
+    ? 'text-stone-200 underline decoration-stone-500 hover:text-white'
+    : 'text-stone-800 underline decoration-stone-500 hover:text-stone-950';
 
   const aboutText = () => {
     return (
     <>
       <div className="flex flex-col items-center justify-center flex-grow mx-4 md:mr-32 md:ml-32">
-        <h1 className="text-4xl md:text-6xl  font-bold text-white text-center md:text-left">
-          Hello, I&apos;m (just) Ken
+        <h1 className={`text-4xl md:text-6xl font-bold text-center md:text-left ${heading}`}>
+          Hello, I&apos;m Kenn
         </h1>
-        <div className="text-lg md:text-xl text-gray-300 text-justify mt-4 md:mt-10">
+        <div className={`text-lg md:text-xl text-justify mt-4 md:mt-10 ${body}`}>
           <p className="mt-4 md:mt-0">
-            I am passionate about secure, distributed systems that operate 
+            I am passionate about secure, distributed systems that operate
             harmoniously as a symphony.  </p>
           <p className="mt-3">
-            In the past few years I have contributed to the development 
+            In the past few years I have contributed to the development
             of many networked and distributed systems for educational and research purposes.</p>
-          <p className="mt-3 "> 
+          <p className="mt-3 ">
             Masters of Engineering in Computer Science Alum from Cornell University.
-            Feel free to reach out: 
-            <a href="mailto:kenncula@gmail.com" target="_blank" rel="noopener noreferrer">
+            Feel free to reach out:{' '}
+            <a href="mailto:kenncula@gmail.com" target="_blank" rel="noopener noreferrer" className={link}>
               kenncula@gmail.com
             </a>
           </p>
@@ -51,7 +59,7 @@ const About = () => {
       <img 
       src={imgSrcs[imgId]} 
       alt="personal picture" 
-      className={`md:shrink-0 mt-20 w-3/4 md:w-1/3 mt-8 md:mt-0 md:mr-10 transition duration-500 ease-in-out transform ${isTransformed ? 'scale-x-[-1] ' : 'scale-x-[1]'}`}
+      className={`md:shrink-1 mt-20 mt-8 md:mt-0 md:mr-20 transition duration-500 ease-in-out object-cover h-64 md:h-96 transform ${isTransformed ? 'scale-x-[1] ' : 'scale-x-[-1]'}`}
       onClick={handlePicClick}/>
     </>
     )
@@ -67,7 +75,13 @@ const About = () => {
   }
 
   return (
-    <div id="About" className="flex flex-col items-center justify-center min-h-screen" style={{ backgroundColor: '#434343' }}>
+    <div
+      id="About"
+      className={
+        'flex flex-col items-center justify-center min-h-screen transition-colors duration-200 ' +
+        (dark ? 'bg-matte-pattern' : 'bg-stone-50')
+      }
+    >
       <div className="flex flex-row items-center justify-center min-h-screen">
         {isMobile() ? (
           <div className='flex flex-col items-center justify-center'>
