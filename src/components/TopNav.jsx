@@ -3,10 +3,12 @@ import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import { useTheme } from '../context/ThemeContext';
 import MusicPlayer from './Music';
 import {
-  introGlowKeyframes,
+  getIntroGlowKeyframes,
   navGlowTransition,
   useIntroAnimation,
 } from '../context/IntroAnimationContext';
+
+const ACCENT_HEX = '#C9A227';
 
 const NAV_LINKS = [
   { label: 'About', href: '#Home' },
@@ -36,6 +38,7 @@ const CONTACT_LINKS = [
 const TopNav = () => {
   const { dark } = useTheme();
   const { navLinkState, showOverlay } = useIntroAnimation();
+  const glowKeyframes = getIntroGlowKeyframes(ACCENT_HEX);
 
   const barClass = dark
     ? 'border-stone-800/80 text-stone-300'
@@ -47,9 +50,9 @@ const TopNav = () => {
         showOverlay ? 'bg-transparent' : dark ? 'bg-matte-pattern/95' : 'bg-stone-50/95'
       }`}
     >
-      <div className="flex h-14 items-center justify-end pl-36 pr-4 sm:pl-44 sm:pr-6 md:h-16 md:pr-8">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-end px-4 sm:px-6 md:h-18 md:px-8">
         <nav
-          className="flex flex-1 flex-wrap items-center justify-end gap-x-3 gap-y-1 text-sm sm:gap-x-5 sm:text-base"
+          className="flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-1 text-base sm:gap-x-6 sm:text-lg"
           aria-label="Main"
         >
           {/* <div
@@ -70,16 +73,11 @@ const TopNav = () => {
               animate = { opacity: 0 };
               transition = { duration: 0 };
             } else if (isGlowing) {
-              animate = introGlowKeyframes;
+              animate = glowKeyframes;
               transition = { ...navGlowTransition, delay: i * 0.1 };
             } else {
-              animate = {
-                opacity: 1,
-                color: '#C9A227',
-                textShadow:
-                  '0 0 14px rgba(201, 162, 39, 0.45), 0 0 28px rgba(201, 162, 39, 0.22)',
-              };
-              transition = { duration: 0.35, ease: 'easeOut' };
+              animate = { opacity: 1, color: ACCENT_HEX };
+              transition = { duration: 0 };
             }
 
             return (
@@ -90,7 +88,7 @@ const TopNav = () => {
                   isHidden ? 'pointer-events-none' : ''
                 } ${
                   navLinkState === 'settled'
-                    ? 'text-brand-gold transition-colors duration-200 hover:text-brand-gold-light'
+                    ? 'nav-shimmer hover:text-brand-gold-light'
                     : 'text-brand-gold'
                 }`}
                 initial={false}
@@ -118,16 +116,11 @@ const TopNav = () => {
                 animate = { opacity: 0 };
                 transition = { duration: 0 };
               } else if (isGlowing) {
-                animate = introGlowKeyframes;
+                animate = glowKeyframes;
                 transition = { ...navGlowTransition, delay: index * 0.1 };
               } else {
-                animate = {
-                  opacity: 1,
-                  color: '#C9A227',
-                  textShadow:
-                    '0 0 14px rgba(201, 162, 39, 0.45), 0 0 28px rgba(201, 162, 39, 0.22)',
-                };
-                transition = { duration: 0.35, ease: 'easeOut' };
+                animate = { opacity: 1, color: ACCENT_HEX };
+                transition = { duration: 0 };
               }
 
               return (
@@ -136,12 +129,8 @@ const TopNav = () => {
                   href={href}
                   aria-label={label}
                   title={label}
-                  className={`grid h-8 w-8 place-items-center rounded-full text-brand-gold drop-shadow-[0_0_8px_rgba(201,162,39,0.35)] hover:text-brand-gold-light ${
+                  className={`grid h-8 w-8 place-items-center rounded-full drop-shadow-none hover:text-brand-gold-light ${
                     isHidden ? 'pointer-events-none' : ''
-                  } ${
-                    navLinkState === 'settled'
-                      ? 'transition-colors duration-200'
-                      : 'text-brand-gold'
                   }`}
                   initial={false}
                   animate={animate}
@@ -165,6 +154,8 @@ const TopNav = () => {
               );
             })}
           </div>
+
+
         </nav>
       </div>
     </header>

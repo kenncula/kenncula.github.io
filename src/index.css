@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --accent: 201 162 39;
+  --accent-light: 212 175 55;
+}
+
 .bg-home {
   background-color: #e8dfa5;
 }
@@ -15,7 +20,17 @@ html {
 #Experience,
 #Projects,
 #Contact {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: 3.5rem;
+}
+
+@media (min-width: 640px) {
+  #Home,
+  #About,
+  #Experience,
+  #Projects,
+  #Contact {
+    scroll-margin-top: 4rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -24,7 +39,7 @@ html {
   #Experience,
   #Projects,
   #Contact {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: 5rem;
   }
 }
 
@@ -40,9 +55,30 @@ html {
 
 .brand-backlight {
   text-shadow:
-    0 0 14px rgba(201, 162, 39, 0.5),
-    0 0 28px rgba(201, 162, 39, 0.28),
-    0 0 48px rgba(201, 162, 39, 0.15);
+    0 0 14px rgb(var(--accent) / 0.5),
+    0 0 28px rgb(var(--accent) / 0.28),
+    0 0 48px rgb(var(--accent) / 0.15);
+}
+
+/* Nav link shimmer on hover — gold gradient sweep */
+.nav-shimmer {
+  background-image: linear-gradient(
+    120deg,
+    currentColor 0%,
+    rgb(var(--accent-light)) 40%,
+    rgb(var(--accent)) 60%,
+    currentColor 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 0.4s ease;
+  background-position: 100% 0;
+}
+
+.nav-shimmer:hover {
+  background-position: 0% 0;
 }
 
 /* Matte black with subtle grey diagonal stripes */
@@ -74,23 +110,23 @@ html {
 }
 
 .cursor-glow-outer {
-  width: 100px;
-  height: 100px;
+  width: 1000px;
+  height: 1000px;
   background: radial-gradient(
     circle,
-    rgba(201, 162, 39, 0.11) 0%,
-    rgba(201, 162, 39, 0.04) 42%,
+    rgb(var(--accent) / 0.11) 0%,
+    rgb(var(--accent) / 0.04) 42%,
     transparent 70%
   );
 }
 
 .cursor-glow-inner {
-  width: 50px;
-  height: 50px;
+  width: 00px;
+  height: 00px;
   background: radial-gradient(
     circle,
-    rgba(255, 236, 180, 0.22) 0%,
-    rgba(212, 175, 55, 0.1) 45%,
+    rgb(var(--accent-light) / 0.22) 0%,
+    rgb(var(--accent) / 0.1) 45%,
     transparent 72%
   );
 }

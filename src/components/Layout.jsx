@@ -20,7 +20,7 @@ const Layout = () => {
         <SiteBrand />
         <TopNav />
         <main
-          className={`relative min-h-screen pt-14 transition-colors duration-200 md:pt-16 ${mainBg}`}
+          className={`relative min-h-screen pt-12 transition-colors duration-200 sm:pt-14 md:pt-16 ${mainBg}`}
         >
           <Outlet />
         </main>

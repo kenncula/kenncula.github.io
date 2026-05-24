@@ -1,13 +1,18 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  introGlowKeyframes,
+  getIntroGlowKeyframes,
   introGlowTransition,
+  GLOW_IN_MS,
   useIntroAnimation,
 } from '../context/IntroAnimationContext';
 
 const BRAND_TEXT = 'Kenn Cula';
-const TRAVEL_SPRING = { type: 'spring', stiffness: 55, damping: 22, mass: 1.1 };
+const BRAND_CHARS = BRAND_TEXT.split('');
+const ACCENT_HEX = '#C9A227';
+
+// Smoother, more elegant spring for travel
+const TRAVEL_SPRING = { type: 'spring', stiffness: 42, damping: 18, mass: 1.3 };
 
 const centerPosition = {
   top: '50%',
@@ -15,19 +20,28 @@ const centerPosition = {
   x: '-50%',
   y: '-50%',
   fontSize: 'clamp(2.25rem, 7vw, 4rem)',
+  letterSpacing: '0.025em',
+  scale: 1,
 };
 
 const cornerPosition = {
-  top: '1.5rem',
-  left: '1.5rem',
-  x: 0,
-  y: -10,
-  fontSize: '2rem',
+  top: '0.95rem',
+  left: '4%',
+  x: '0%',
+  y: '0%',
+  fontSize: '1.65rem',
+  letterSpacing: '0.02em',
+  scale: 1,
 };
+
+// Character stagger animation for the initial reveal
+const charRevealDelay = 0.08; // seconds between each character
+const charRevealDuration = 0.5;
 
 const SiteBrand = () => {
   const location = useLocation();
   const { phase, showOverlay, playLogoGlow, atCenter } = useIntroAnimation();
+  const glowKeyframes = getIntroGlowKeyframes(ACCENT_HEX);
 
   const handleLogoClick = (e) => {
     if (location.pathname === '/') {
@@ -48,28 +62,93 @@ const SiteBrand = () => {
       />
 
       <motion.div
-        className="fixed z-50 font-display font-semibold tracking-wide select-none"
+        className="fixed z-50 origin-top-left font-display font-semibold select-none"
+        style={!atCenter ? { top: '0.95rem', left: '4%', fontSize: '1.65rem', letterSpacing: '0.02em' } : undefined}
         initial={atCenter ? centerPosition : cornerPosition}
         animate={atCenter ? centerPosition : cornerPosition}
         transition={phase === 'travel' ? TRAVEL_SPRING : { duration: 0 }}
       >
+        {/* Radial light flare behind text at peak brightness */}
+        <motion.div
+          className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center"
+          aria-hidden
+        >
+          <motion.div
+            className="h-[300%] w-[140%] rounded-full"
+            style={{
+              background: 'radial-gradient(ellipse at center, rgba(201,162,39, 0.35) 0%, transparent 65%)',
+            }}
+            initial={{ opacity: 0, scale: 0.3 }}
+            animate={
+              playLogoGlow
+                ? { opacity: [0, 0, 0.85, 0.25, 0], scale: [0.3, 0.3, 1.1, 0.9, 0.7] }
+                : { opacity: 0, scale: 0.3 }
+            }
+            transition={
+              playLogoGlow
+                ? { duration: GLOW_IN_MS / 1000, times: [0, 0.2, 0.4, 0.7, 1], ease: 'easeInOut' }
+                : { duration: 0.4 }
+            }
+          />
+        </motion.div>
+
+        {/* Character-by-character reveal with blur + glow animation */}
         <motion.span
-          className={
+          className={playLogoGlow ? 'inline-flex' : 'brand-backlight inline-flex'}
+          style={!playLogoGlow ? { color: ACCENT_HEX, letterSpacing: '0.02em' } : undefined}
+          initial={playLogoGlow ? { letterSpacing: '0em' } : false}
+          animate={
             playLogoGlow
-              ? 'inline-block text-brand-gold'
-              : 'brand-backlight inline-block text-brand-gold'
+              ? { letterSpacing: ['0em', '0.08em', '0.04em', '0.02em'] }
+              : undefined
           }
-          initial={playLogoGlow ? { opacity: 0, color: '#4a3f12' } : false}
-          animate={playLogoGlow ? introGlowKeyframes : undefined}
-          transition={playLogoGlow ? introGlowTransition : undefined}
+          transition={
+            playLogoGlow
+              ? { duration: GLOW_IN_MS / 1000, times: [0, 0.35, 0.65, 1], ease: 'easeInOut' }
+              : { duration: 0 }
+          }
         >
           <Link
             to="/"
             onClick={handleLogoClick}
-            className="hover:text-brand-gold-light transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-gold"
+            className="inline-flex hover:text-brand-gold-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-gold"
             aria-label="Kenn Cula — home"
           >
-            {BRAND_TEXT}
+            {BRAND_CHARS.map((char, i) => (
+              <motion.span
+                key={i}
+                className="inline-block"
+                style={char === ' ' ? { width: '0.3em' } : undefined}
+                initial={
+                  playLogoGlow
+                    ? { opacity: 0, filter: 'blur(12px)', y: 8 }
+                    : false
+                }
+                animate={
+                  playLogoGlow
+                    ? {
+                        opacity: glowKeyframes.opacity,
+                        color: glowKeyframes.color,
+                        textShadow: glowKeyframes.textShadow,
+                        filter: ['blur(12px)', 'blur(0px)', 'blur(0px)', 'blur(0px)'],
+                        y: [8, 0, 0, 0],
+                      }
+                    : { opacity: 1, color: ACCENT_HEX }
+                }
+                transition={
+                  playLogoGlow
+                    ? {
+                        ...introGlowTransition,
+                        delay: i * charRevealDelay,
+                        filter: { duration: charRevealDuration, delay: i * charRevealDelay, ease: 'easeOut' },
+                        y: { duration: charRevealDuration, delay: i * charRevealDelay, ease: 'easeOut' },
+                      }
+                    : { duration: 0 }
+                }
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            ))}
           </Link>
         </motion.span>
       </motion.div>

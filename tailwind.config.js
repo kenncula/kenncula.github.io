@@ -1,4 +1,14 @@
 /** @type {import('tailwindcss').Config} */
+
+function withAccentVar(varName) {
+  return ({ opacityValue }) => {
+    if (opacityValue !== undefined) {
+      return `rgb(var(${varName}) / ${opacityValue})`;
+    }
+    return `rgb(var(${varName}))`;
+  };
+}
+
 export default {
   darkMode: 'class',
   content: [
@@ -8,8 +18,8 @@ export default {
     extend: {
       colors: {
         brand: {
-          gold: '#C9A227',
-          'gold-light': '#D4AF37',
+          gold: withAccentVar('--accent'),
+          'gold-light': withAccentVar('--accent-light'),
         },
       },
       fontFamily: {

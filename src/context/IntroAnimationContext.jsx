@@ -4,36 +4,54 @@ const INTRO_KEY = 'kenncula-intro-done';
 const NAV_LINK_COUNT = 7;
 const NAV_STAGGER_MS = 100;
 
-/** Center logo fade / brighten / dim */
-export const GLOW_IN_MS = 2800;
+/** Center logo fade / brighten / dim — extended for character stagger */
+export const GLOW_IN_MS = 3200;
 /** Nav shimmer starts only after logo intro completes */
 export const NAV_GLOW_START_MS = GLOW_IN_MS;
 export const NAV_GLOW_MS = 3000;
 export const NAV_SETTLE_MS = NAV_GLOW_MS + (NAV_LINK_COUNT - 1) * NAV_STAGGER_MS + 150;
 
-export const TRAVEL_SETTLE_MS = 1600;
-export const OVERLAY_FADE_MS = 900;
+export const TRAVEL_SETTLE_MS = 1800;
+export const OVERLAY_FADE_MS = 1000;
 
-export const introGlowKeyframes = {
-  opacity: [0, 1, 1, 1],
-  color: ['#4a3f12', '#fff6dc', '#e8c96a', '#C9A227'],
-  textShadow: [
-    '0 0 0 transparent, 0 0 0 transparent',
-    '0 0 28px rgba(255, 245, 210, 0.95), 0 0 56px rgba(255, 220, 140, 0.75), 0 0 90px rgba(212, 175, 55, 0.5)',
-    '0 0 20px rgba(201, 162, 39, 0.6), 0 0 40px rgba(201, 162, 39, 0.35)',
-    '0 0 14px rgba(201, 162, 39, 0.5), 0 0 28px rgba(201, 162, 39, 0.28)',
-  ],
-};
+export function getIntroGlowKeyframes(accentHex = '#C9A227') {
+  // Convert hex to RGB for rgba usage
+  const r = parseInt(accentHex.slice(1, 3), 16);
+  const g = parseInt(accentHex.slice(3, 5), 16);
+  const b = parseInt(accentHex.slice(5, 7), 16);
+  const rgb = `${r}, ${g}, ${b}`;
+  // Lighter variant for shimmer peak
+  const lr = Math.min(255, r + 50);
+  const lg = Math.min(255, g + 50);
+  const lb = Math.min(255, b + 50);
+  const darkRgb = `${Math.floor(r * 0.2)}, ${Math.floor(g * 0.2)}, ${Math.floor(b * 0.2)}`;
+  const lightHex = `#${lr.toString(16).padStart(2,'0')}${lg.toString(16).padStart(2,'0')}${lb.toString(16).padStart(2,'0')}`;
+
+  return {
+    opacity: [0, 0.6, 1, 1, 1],
+    color: [`rgb(${darkRgb})`, `rgba(${rgb}, 0.8)`, '#fffcf0', lightHex, accentHex],
+    textShadow: [
+      '0 0 0 transparent, 0 0 0 transparent',
+      `0 0 12px rgba(${rgb}, 0.4), 0 0 24px rgba(${rgb}, 0.2)`,
+      `0 0 32px rgba(255, 245, 210, 0.95), 0 0 64px rgba(255, 220, 140, 0.8), 0 0 100px rgba(${rgb}, 0.6)`,
+      `0 0 20px rgba(${rgb}, 0.6), 0 0 40px rgba(${rgb}, 0.35)`,
+      `0 0 14px rgba(${rgb}, 0.5), 0 0 28px rgba(${rgb}, 0.28)`,
+    ],
+  };
+}
+
+// Keep backward-compatible static export for any other consumers
+export const introGlowKeyframes = getIntroGlowKeyframes();
 
 export const introGlowTransition = {
   duration: GLOW_IN_MS / 1000,
-  times: [0, 0.38, 0.65, 1],
+  times: [0, 0.2, 0.45, 0.7, 1],
   ease: 'easeInOut',
 };
 
 export const navGlowTransition = {
   duration: NAV_GLOW_MS / 1000,
-  times: [0, 0.35, 0.65, 1],
+  times: [0, 0.2, 0.45, 0.7, 1],
   ease: 'easeInOut',
 };
 
